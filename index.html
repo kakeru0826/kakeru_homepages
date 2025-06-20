@@ -52,7 +52,84 @@
 
     if (month >= 3 && month <= 5) {
       season = "spring";
-      image = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Sakura_Silhouette.svg/32px-Sakura_Silhouette.svg.png";
+      image = "<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>季節の舞い散るホームページ</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #fff0f5, #f0ffff);
+      overflow: hidden;
+    }
+
+    header {
+      background: #ffe4f0;
+      text-align: center;
+      padding: 2em;
+      font-size: 1.5em;
+    }
+
+    .falling {
+      position: fixed;
+      top: -50px;
+      pointer-events: none;
+      width: 30px;
+      height: 30px;
+      opacity: 0.7;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>🌸季節が舞うホームページへようこそ❄️</header>
+
+  <script>
+    const month = new Date().getMonth() + 1;
+    let season = "spring";
+    let image = "";
+
+    if (month >= 3 && month <= 5) {
+      season = "spring";
+      image = "sakura.jpeg";
+    } else if (month >= 6 && month <= 8) {
+      season = "summer";
+      image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Ilex_leaf_icon.svg/32px-Ilex_leaf_icon.svg.png";
+    } else if (month >= 9 && month <= 11) {
+      season = "autumn";
+      image = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Maple_Leaf.svg/32px-Maple_Leaf.svg.png";
+    } else {
+      season = "winter";
+      image = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Snow_flake_icon.svg/32px-Snow_flake_icon.svg.png";
+    }
+
+    for (let i = 0; i < 30; i++) {
+      const drop = document.createElement("img");
+      drop.src = image;
+      drop.className = "falling";
+      drop.style.left = Math.random() * 100 + "vw";
+      drop.style.animationDuration = (5 + Math.random() * 5) + "s";
+      drop.style.animationDelay = Math.random() * 5 + "s";
+      document.body.appendChild(drop);
+    }
+  </script>
+</body>
+</html>";
     } else if (month >= 6 && month <= 8) {
       season = "summer";
       image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Ilex_leaf_icon.svg/32px-Ilex_leaf_icon.svg.png";
