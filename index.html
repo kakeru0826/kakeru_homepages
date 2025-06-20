@@ -2,38 +2,42 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>季節の舞い散るホームページ</title>
+  <title>季節の背景＋アニメーション</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #fff0f5, #f0ffff);
+      height: 100vh;
       overflow: hidden;
+      background-size: cover;
+      background-position: center;
     }
 
-    header {
-      background: #ffe4f0;
-      text-align: center;
-      padding: 2em;
-      font-size: 1.5em;
+    body.spring {
+      background-image: url('sakura.png');
+    }
+    body.summer {
+      background-image: url('happa.jpeg');
+    }
+    body.autumn {
+      background-image: url('momiji.png');
+    }
+    body.winter {
+      background-image: url('snow.png');
     }
 
-    .falling {
+    .particle {
       position: fixed;
-      top: -50px;
-      pointer-events: none;
       width: 30px;
       height: 30px;
-      opacity: 0.7;
+      pointer-events: none;
+      z-index: 1000;
       animation: fall linear infinite;
     }
 
     @keyframes fall {
       0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.7;
+        transform: translateY(-10%) rotate(0deg);
+        opacity: 1;
       }
       100% {
         transform: translateY(110vh) rotate(360deg);
@@ -43,113 +47,50 @@
   </style>
 </head>
 <body>
-  <header>🌸季節が舞うホームページへようこそ❄️</header>
-
   <script>
     const month = new Date().getMonth() + 1;
-    let season = "spring";
-    let image = "";
+    let season;
+    let particleImage;
 
     if (month >= 3 && month <= 5) {
       season = "spring";
-      image = "<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>季節の舞い散るホームページ</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #fff0f5, #f0ffff);
-      overflow: hidden;
-    }
-
-    header {
-      background: #ffe4f0;
-      text-align: center;
-      padding: 2em;
-      font-size: 1.5em;
-    }
-
-    .falling {
-      position: fixed;
-      top: -50px;
-      pointer-events: none;
-      width: 30px;
-      height: 30px;
-      opacity: 0.7;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>🌸季節が舞うホームページへようこそ❄️</header>
-
-  <script>
-    const month = new Date().getMonth() + 1;
-    let season = "spring";
-    let image = "";
-
-    if (month >= 3 && month <= 5) {
-      season = "spring";
-      image = "sakura.jpeg";
+      particleImage = "sakura-petal.png";
     } else if (month >= 6 && month <= 8) {
       season = "summer";
-      image = "happa.png";
+      particleImage = "leaf.png"; // 緑の葉
     } else if (month >= 9 && month <= 11) {
       season = "autumn";
-      image = "momiji.png";
+      particleImage = "leaf.png"; // 紅葉（画像を紅くしてもOK）
     } else {
       season = "winter";
-      image = "snow.png";
+      particleImage = "snowflake.png";
     }
 
-    for (let i = 0; i < 30; i++) {
-      const drop = document.createElement("img");
-      drop.src = image;
-      drop.className = "falling";
-      drop.style.left = Math.random() * 100 + "vw";
-      drop.style.animationDuration = (5 + Math.random() * 5) + "s";
-      drop.style.animationDelay = Math.random() * 5 + "s";
-      document.body.appendChild(drop);
-    }
-  </script>
-</body>
-</html>";
-    } else if (month >= 6 && month <= 8) {
-      season = "summer";
-      image = "happa.jpeg";
-    } else if (month >= 9 && month <= 11) {
-      season = "autumn";
-      image = "momiji.png";
-    } else {
-      season = "winter";
-      image = "snow.png";
+    document.body.classList.add(season);
+
+    // アニメーションのパーティクルを生成する関数
+    function createParticle() {
+      const particle = document.createElement('img');
+      particle.src = particleImage;
+      particle.classList.add('particle');
+
+      const size = Math.random() * 20 + 20; // サイズ20〜40px
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+
+      particle.style.left = Math.random() * window.innerWidth + 'px';
+      particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+
+      document.body.appendChild(particle);
+
+      // アニメーション後に削除
+      setTimeout(() => {
+        particle.remove();
+      }, 10000);
     }
 
-    for (let i = 0; i < 30; i++) {
-      const drop = document.createElement("img");
-      drop.src = image;
-      drop.className = "falling";
-      drop.style.left = Math.random() * 100 + "vw";
-      drop.style.animationDuration = (5 + Math.random() * 5) + "s";
-      drop.style.animationDelay = Math.random() * 5 + "s";
-      document.body.appendChild(drop);
-    }
+    // 定期的に生成
+    setInterval(createParticle, 300);
   </script>
 </body>
 </html>
